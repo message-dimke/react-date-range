@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",           // Or "NodeNext" if using TypeScript with Node.js
+    "moduleResolution": "Node",
+    "esModuleInterop": true,      // Ensures compatibility with CommonJS modules
+    "allowSyntheticDefaultImports": true
+  }
+}

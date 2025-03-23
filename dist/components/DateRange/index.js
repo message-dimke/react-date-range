@@ -9,7 +9,7 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 var _Calendar = _interopRequireDefault(require("../Calendar"));
 var _DayCell = require("../DayCell");
 var _utils = require("../../utils");
-var _dateFns = require("date-fns");
+var _dateFns = _interopRequireDefault(require("date-fns"));
 var _classnames = _interopRequireDefault(require("classnames"));
 var _styles = _interopRequireDefault(require("../../styles"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -49,13 +49,13 @@ class DateRange extends _react.Component {
         endDate = value.endDate;
       } else if (focusedRange[1] === 0) {
         // startDate selection
-        const dayOffset = (0, _dateFns.differenceInCalendarDays)(endDate || now, startDate);
+        const dayOffset = _dateFns.default.differenceInCalendarDays(endDate || now, startDate);
         const calculateEndDate = () => {
           if (moveRangeOnFirstSelection) {
-            return (0, _dateFns.addDays)(value, dayOffset);
+            return _dateFns.default.addDays(value, dayOffset);
           }
           if (retainEndDateOnFirstSelection) {
-            if (!endDate || (0, _dateFns.isBefore)(value, endDate)) {
+            if (!endDate || _dateFns.default.isBefore(value, endDate)) {
               return endDate;
             }
             return value;
@@ -64,7 +64,7 @@ class DateRange extends _react.Component {
         };
         startDate = value;
         endDate = calculateEndDate();
-        if (maxDate) endDate = (0, _dateFns.min)([endDate, maxDate]);
+        if (maxDate) endDate = _dateFns.default.min([endDate, maxDate]);
         nextFocusRange = [focusedRange[0], 1];
       } else {
         endDate = value;
@@ -72,19 +72,19 @@ class DateRange extends _react.Component {
 
       // reverse dates if startDate before endDate
       let isStartDateSelected = focusedRange[1] === 0;
-      if ((0, _dateFns.isBefore)(endDate, startDate)) {
+      if (_dateFns.default.isBefore(endDate, startDate)) {
         isStartDateSelected = !isStartDateSelected;
         [startDate, endDate] = [endDate, startDate];
       }
-      const inValidDatesWithinRange = disabledDates.filter(disabledDate => (0, _dateFns.isWithinInterval)(disabledDate, {
+      const inValidDatesWithinRange = disabledDates.filter(disabledDate => _dateFns.default.isWithinInterval(disabledDate, {
         start: startDate,
         end: endDate
       }));
       if (inValidDatesWithinRange.length > 0) {
         if (isStartDateSelected) {
-          startDate = (0, _dateFns.addDays)((0, _dateFns.max)(inValidDatesWithinRange), 1);
+          startDate = _dateFns.default.addDays(_dateFns.default.max(inValidDatesWithinRange), 1);
         } else {
-          endDate = (0, _dateFns.addDays)((0, _dateFns.min)(inValidDatesWithinRange), -1);
+          endDate = _dateFns.default.addDays(_dateFns.default.min(inValidDatesWithinRange), -1);
         }
       }
       if (!nextFocusRange) {

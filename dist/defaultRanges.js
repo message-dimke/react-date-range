@@ -5,26 +5,27 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createStaticRanges = createStaticRanges;
 exports.defaultStaticRanges = exports.defaultInputRanges = void 0;
-var _dateFns = require("date-fns");
+var _dateFns = _interopRequireDefault(require("date-fns"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 const defineds = {
-  startOfWeek: (0, _dateFns.startOfWeek)(new Date()),
-  endOfWeek: (0, _dateFns.endOfWeek)(new Date()),
-  startOfLastWeek: (0, _dateFns.startOfWeek)((0, _dateFns.addDays)(new Date(), -7)),
-  endOfLastWeek: (0, _dateFns.endOfWeek)((0, _dateFns.addDays)(new Date(), -7)),
-  startOfToday: (0, _dateFns.startOfDay)(new Date()),
-  endOfToday: (0, _dateFns.endOfDay)(new Date()),
-  startOfYesterday: (0, _dateFns.startOfDay)((0, _dateFns.addDays)(new Date(), -1)),
-  endOfYesterday: (0, _dateFns.endOfDay)((0, _dateFns.addDays)(new Date(), -1)),
-  startOfMonth: (0, _dateFns.startOfMonth)(new Date()),
-  endOfMonth: (0, _dateFns.endOfMonth)(new Date()),
-  startOfLastMonth: (0, _dateFns.startOfMonth)((0, _dateFns.addMonths)(new Date(), -1)),
-  endOfLastMonth: (0, _dateFns.endOfMonth)((0, _dateFns.addMonths)(new Date(), -1))
+  startOfWeek: _dateFns.default.startOfWeek(new Date()),
+  endOfWeek: _dateFns.default.endOfWeek(new Date()),
+  startOfLastWeek: _dateFns.default.startOfWeek(_dateFns.default.addDays(new Date(), -7)),
+  endOfLastWeek: _dateFns.default.endOfWeek(_dateFns.default.addDays(new Date(), -7)),
+  startOfToday: _dateFns.default.startOfDay(new Date()),
+  endOfToday: _dateFns.default.endOfDay(new Date()),
+  startOfYesterday: _dateFns.default.startOfDay(_dateFns.default.addDays(new Date(), -1)),
+  endOfYesterday: _dateFns.default.endOfDay(_dateFns.default.addDays(new Date(), -1)),
+  startOfMonth: _dateFns.default.startOfMonth(new Date()),
+  endOfMonth: _dateFns.default.endOfMonth(new Date()),
+  startOfLastMonth: _dateFns.default.startOfMonth(_dateFns.default.addMonths(new Date(), -1)),
+  endOfLastMonth: _dateFns.default.endOfMonth(_dateFns.default.addMonths(new Date(), -1))
 };
 const staticRangeHandler = {
   range: {},
   isSelected(range) {
     const definedRange = this.range();
-    return (0, _dateFns.isSameDay)(range.startDate, definedRange.startDate) && (0, _dateFns.isSameDay)(range.endDate, definedRange.endDate);
+    return _dateFns.default.isSameDay(range.startDate, definedRange.startDate) && _dateFns.default.isSameDay(range.endDate, definedRange.endDate);
   }
 };
 function createStaticRanges(ranges) {
@@ -74,14 +75,14 @@ const defaultInputRanges = exports.defaultInputRanges = [{
   label: 'days up to today',
   range(value) {
     return {
-      startDate: (0, _dateFns.addDays)(defineds.startOfToday, (Math.max(Number(value), 1) - 1) * -1),
+      startDate: _dateFns.default.addDays(defineds.startOfToday, (Math.max(Number(value), 1) - 1) * -1),
       endDate: defineds.endOfToday
     };
   },
   getCurrentValue(range) {
-    if (!(0, _dateFns.isSameDay)(range.endDate, defineds.endOfToday)) return '-';
+    if (!_dateFns.default.isSameDay(range.endDate, defineds.endOfToday)) return '-';
     if (!range.startDate) return '∞';
-    return (0, _dateFns.differenceInCalendarDays)(defineds.endOfToday, range.startDate) + 1;
+    return _dateFns.default.differenceInCalendarDays(defineds.endOfToday, range.startDate) + 1;
   }
 }, {
   label: 'days starting today',
@@ -89,12 +90,12 @@ const defaultInputRanges = exports.defaultInputRanges = [{
     const today = new Date();
     return {
       startDate: today,
-      endDate: (0, _dateFns.addDays)(today, Math.max(Number(value), 1) - 1)
+      endDate: _dateFns.default.addDays(today, Math.max(Number(value), 1) - 1)
     };
   },
   getCurrentValue(range) {
-    if (!(0, _dateFns.isSameDay)(range.startDate, defineds.startOfToday)) return '-';
+    if (!_dateFns.default.isSameDay(range.startDate, defineds.startOfToday)) return '-';
     if (!range.endDate) return '∞';
-    return (0, _dateFns.differenceInCalendarDays)(range.endDate, defineds.startOfToday) + 1;
+    return _dateFns.default.differenceInCalendarDays(range.endDate, defineds.startOfToday) + 1;
   }
 }];

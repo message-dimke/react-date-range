@@ -7,7 +7,7 @@ exports.rangeShape = exports.default = void 0;
 var _react = _interopRequireWildcard(require("react"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _classnames = _interopRequireDefault(require("classnames"));
-var _dateFns = require("date-fns");
+var _dateFns = _interopRequireDefault(require("date-fns"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -101,11 +101,11 @@ class DayCell extends _react.Component {
         styles
       } = this.props;
       if (!preview) return null;
-      const startDate = preview.startDate ? (0, _dateFns.endOfDay)(preview.startDate) : null;
-      const endDate = preview.endDate ? (0, _dateFns.startOfDay)(preview.endDate) : null;
-      const isInRange = (!startDate || (0, _dateFns.isAfter)(day, startDate)) && (!endDate || (0, _dateFns.isBefore)(day, endDate));
-      const isStartEdge = !isInRange && (0, _dateFns.isSameDay)(day, startDate);
-      const isEndEdge = !isInRange && (0, _dateFns.isSameDay)(day, endDate);
+      const startDate = preview.startDate ? _dateFns.default.endOfDay(preview.startDate) : null;
+      const endDate = preview.endDate ? _dateFns.default.startOfDay(preview.endDate) : null;
+      const isInRange = (!startDate || _dateFns.default.isAfter(day, startDate)) && (!endDate || _dateFns.default.isBefore(day, endDate));
+      const isStartEdge = !isInRange && _dateFns.default.isSameDay(day, startDate);
+      const isEndEdge = !isInRange && _dateFns.default.isSameDay(day, endDate);
       return /*#__PURE__*/_react.default.createElement("span", {
         className: (0, _classnames.default)({
           [styles.dayStartPreview]: isStartEdge,
@@ -124,7 +124,7 @@ class DayCell extends _react.Component {
         day
       } = this.props;
       if (this.props.displayMode === 'date') {
-        let isSelected = (0, _dateFns.isSameDay)(this.props.day, this.props.date);
+        let isSelected = _dateFns.default.isSameDay(this.props.day, this.props.date);
         return isSelected ? /*#__PURE__*/_react.default.createElement("span", {
           className: styles.selected,
           style: {
@@ -135,14 +135,14 @@ class DayCell extends _react.Component {
       const inRanges = ranges.reduce((result, range) => {
         let startDate = range.startDate;
         let endDate = range.endDate;
-        if (startDate && endDate && (0, _dateFns.isBefore)(endDate, startDate)) {
+        if (startDate && endDate && _dateFns.default.isBefore(endDate, startDate)) {
           [startDate, endDate] = [endDate, startDate];
         }
-        startDate = startDate ? (0, _dateFns.endOfDay)(startDate) : null;
-        endDate = endDate ? (0, _dateFns.startOfDay)(endDate) : null;
-        const isInRange = (!startDate || (0, _dateFns.isAfter)(day, startDate)) && (!endDate || (0, _dateFns.isBefore)(day, endDate));
-        const isStartEdge = !isInRange && (0, _dateFns.isSameDay)(day, startDate);
-        const isEndEdge = !isInRange && (0, _dateFns.isSameDay)(day, endDate);
+        startDate = startDate ? _dateFns.default.endOfDay(startDate) : null;
+        endDate = endDate ? _dateFns.default.startOfDay(endDate) : null;
+        const isInRange = (!startDate || _dateFns.default.isAfter(day, startDate)) && (!endDate || _dateFns.default.isBefore(day, endDate));
+        const isStartEdge = !isInRange && _dateFns.default.isSameDay(day, startDate);
+        const isEndEdge = !isInRange && _dateFns.default.isSameDay(day, endDate);
         if (isInRange || isStartEdge || isEndEdge) {
           return [...result, {
             isStartEdge,
@@ -194,7 +194,7 @@ class DayCell extends _react.Component {
       }
     }), this.renderSelectionPlaceholders(), this.renderPreviewPlaceholder(), /*#__PURE__*/_react.default.createElement("span", {
       className: this.props.styles.dayNumber
-    }, dayContentRenderer?.(this.props.day) || /*#__PURE__*/_react.default.createElement("span", null, (0, _dateFns.format)(this.props.day, this.props.dayDisplayFormat))));
+    }, dayContentRenderer?.(this.props.day) || /*#__PURE__*/_react.default.createElement("span", null, _dateFns.default.format(this.props.day, this.props.dayDisplayFormat))));
   }
 }
 DayCell.defaultProps = {};

@@ -1,13 +1,5 @@
 import classnames from 'classnames';
-import {
-  startOfMonth,
-  endOfMonth,
-  startOfWeek,
-  endOfWeek,
-  differenceInCalendarDays,
-  differenceInCalendarMonths,
-  addDays,
-} from 'date-fns';
+import dateFns from 'date-fns';
 
 export function calcFocusDate(currentFocusedDate, props) {
   const { shownDate, date, months, ranges, focusedRange, displayMode } = props;
@@ -25,8 +17,8 @@ export function calcFocusDate(currentFocusedDate, props) {
       end: date,
     };
   }
-  targetInterval.start = startOfMonth(targetInterval.start || new Date());
-  targetInterval.end = endOfMonth(targetInterval.end || targetInterval.start);
+  targetInterval.start = dateFns.startOfMonth(targetInterval.start || new Date());
+  targetInterval.end = dateFns.endOfMonth(targetInterval.end || targetInterval.start);
   const targetDate = targetInterval.start || targetInterval.end || shownDate || new Date();
 
   // initial focus
@@ -34,7 +26,7 @@ export function calcFocusDate(currentFocusedDate, props) {
 
   // // just return targetDate for native scrolled calendars
   // if (props.scroll.enabled) return targetDate;
-  if (differenceInCalendarMonths(targetInterval.start, targetInterval.end) > months) {
+  if (dateFns.differenceInCalendarMonths(targetInterval.start, targetInterval.end) > months) {
     // don't change focused if new selection in view area
     return currentFocusedDate;
   }
@@ -50,12 +42,12 @@ export function findNextRangeIndex(ranges, currentRangeIndex = -1) {
 }
 
 export function getMonthDisplayRange(date, dateOptions, fixedHeight) {
-  const startDateOfMonth = startOfMonth(date, dateOptions);
-  const endDateOfMonth = endOfMonth(date, dateOptions);
-  const startDateOfCalendar = startOfWeek(startDateOfMonth, dateOptions);
-  let endDateOfCalendar = endOfWeek(endDateOfMonth, dateOptions);
-  if (fixedHeight && differenceInCalendarDays(endDateOfCalendar, startDateOfCalendar) <= 34) {
-    endDateOfCalendar = addDays(endDateOfCalendar, 7);
+  const startDateOfMonth = dateFns.startOfMonth(date, dateOptions);
+  const endDateOfMonth = dateFns.endOfMonth(date, dateOptions);
+  const startDateOfCalendar = dateFns.startOfWeek(startDateOfMonth, dateOptions);
+  let endDateOfCalendar = dateFns.endOfWeek(endDateOfMonth, dateOptions);
+  if (fixedHeight && dateFns.differenceInCalendarDays(endDateOfCalendar, startDateOfCalendar) <= 34) {
+    endDateOfCalendar = dateFns.addDays(endDateOfCalendar, 7);
   }
   return {
     start: startDateOfCalendar,
