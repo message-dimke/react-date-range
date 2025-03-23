@@ -5,27 +5,28 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createStaticRanges = createStaticRanges;
 exports.defaultStaticRanges = exports.defaultInputRanges = void 0;
-var _dateFns = _interopRequireDefault(require("date-fns"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var dateFns = _interopRequireWildcard(require("date-fns"));
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 const defineds = {
-  startOfWeek: _dateFns.default.startOfWeek(new Date()),
-  endOfWeek: _dateFns.default.endOfWeek(new Date()),
-  startOfLastWeek: _dateFns.default.startOfWeek(_dateFns.default.addDays(new Date(), -7)),
-  endOfLastWeek: _dateFns.default.endOfWeek(_dateFns.default.addDays(new Date(), -7)),
-  startOfToday: _dateFns.default.startOfDay(new Date()),
-  endOfToday: _dateFns.default.endOfDay(new Date()),
-  startOfYesterday: _dateFns.default.startOfDay(_dateFns.default.addDays(new Date(), -1)),
-  endOfYesterday: _dateFns.default.endOfDay(_dateFns.default.addDays(new Date(), -1)),
-  startOfMonth: _dateFns.default.startOfMonth(new Date()),
-  endOfMonth: _dateFns.default.endOfMonth(new Date()),
-  startOfLastMonth: _dateFns.default.startOfMonth(_dateFns.default.addMonths(new Date(), -1)),
-  endOfLastMonth: _dateFns.default.endOfMonth(_dateFns.default.addMonths(new Date(), -1))
+  startOfWeek: dateFns.startOfWeek(new Date()),
+  endOfWeek: dateFns.endOfWeek(new Date()),
+  startOfLastWeek: dateFns.startOfWeek(dateFns.addDays(new Date(), -7)),
+  endOfLastWeek: dateFns.endOfWeek(dateFns.addDays(new Date(), -7)),
+  startOfToday: dateFns.startOfDay(new Date()),
+  endOfToday: dateFns.endOfDay(new Date()),
+  startOfYesterday: dateFns.startOfDay(dateFns.addDays(new Date(), -1)),
+  endOfYesterday: dateFns.endOfDay(dateFns.addDays(new Date(), -1)),
+  startOfMonth: dateFns.startOfMonth(new Date()),
+  endOfMonth: dateFns.endOfMonth(new Date()),
+  startOfLastMonth: dateFns.startOfMonth(dateFns.addMonths(new Date(), -1)),
+  endOfLastMonth: dateFns.endOfMonth(dateFns.addMonths(new Date(), -1))
 };
 const staticRangeHandler = {
   range: {},
   isSelected(range) {
     const definedRange = this.range();
-    return _dateFns.default.isSameDay(range.startDate, definedRange.startDate) && _dateFns.default.isSameDay(range.endDate, definedRange.endDate);
+    return dateFns.isSameDay(range.startDate, definedRange.startDate) && dateFns.isSameDay(range.endDate, definedRange.endDate);
   }
 };
 function createStaticRanges(ranges) {
@@ -75,14 +76,14 @@ const defaultInputRanges = exports.defaultInputRanges = [{
   label: 'days up to today',
   range(value) {
     return {
-      startDate: _dateFns.default.addDays(defineds.startOfToday, (Math.max(Number(value), 1) - 1) * -1),
+      startDate: dateFns.addDays(defineds.startOfToday, (Math.max(Number(value), 1) - 1) * -1),
       endDate: defineds.endOfToday
     };
   },
   getCurrentValue(range) {
-    if (!_dateFns.default.isSameDay(range.endDate, defineds.endOfToday)) return '-';
+    if (!dateFns.isSameDay(range.endDate, defineds.endOfToday)) return '-';
     if (!range.startDate) return '∞';
-    return _dateFns.default.differenceInCalendarDays(defineds.endOfToday, range.startDate) + 1;
+    return dateFns.differenceInCalendarDays(defineds.endOfToday, range.startDate) + 1;
   }
 }, {
   label: 'days starting today',
@@ -90,12 +91,12 @@ const defaultInputRanges = exports.defaultInputRanges = [{
     const today = new Date();
     return {
       startDate: today,
-      endDate: _dateFns.default.addDays(today, Math.max(Number(value), 1) - 1)
+      endDate: dateFns.addDays(today, Math.max(Number(value), 1) - 1)
     };
   },
   getCurrentValue(range) {
-    if (!_dateFns.default.isSameDay(range.startDate, defineds.startOfToday)) return '-';
+    if (!dateFns.isSameDay(range.startDate, defineds.startOfToday)) return '-';
     if (!range.endDate) return '∞';
-    return _dateFns.default.differenceInCalendarDays(range.endDate, defineds.startOfToday) + 1;
+    return dateFns.differenceInCalendarDays(range.endDate, defineds.startOfToday) + 1;
   }
 }];

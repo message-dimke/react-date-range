@@ -7,7 +7,7 @@ exports.default = void 0;
 var _react = _interopRequireWildcard(require("react"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _DayCell = _interopRequireWildcard(require("../DayCell"));
-var _dateFns = _interopRequireDefault(require("date-fns"));
+var dateFns = _interopRequireWildcard(require("date-fns"));
 var _utils = require("../../utils");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
@@ -17,13 +17,13 @@ function renderWeekdays(styles, dateOptions, weekdayDisplayFormat) {
   const now = new Date();
   return /*#__PURE__*/_react.default.createElement("div", {
     className: styles.weekDays
-  }, _dateFns.default.eachDayOfInterval({
-    start: _dateFns.default.startOfWeek(now, dateOptions),
-    end: _dateFns.default.endOfWeek(now, dateOptions)
+  }, dateFns.eachDayOfInterval({
+    start: dateFns.startOfWeek(now, dateOptions),
+    end: dateFns.endOfWeek(now, dateOptions)
   }).map((day, i) => /*#__PURE__*/_react.default.createElement("span", {
     className: styles.weekDay,
     key: i
-  }, _dateFns.default.format(day, weekdayDisplayFormat, dateOptions))));
+  }, dateFns.format(day, weekdayDisplayFormat, dateOptions))));
 }
 class Month extends _react.PureComponent {
   render() {
@@ -36,8 +36,8 @@ class Month extends _react.PureComponent {
       disabledDates,
       disabledDay
     } = this.props;
-    const minDate = this.props.minDate && _dateFns.default.startOfDay(this.props.minDate);
-    const maxDate = this.props.maxDate && _dateFns.default.endOfDay(this.props.maxDate);
+    const minDate = this.props.minDate && dateFns.startOfDay(this.props.minDate);
+    const maxDate = this.props.maxDate && dateFns.endOfDay(this.props.maxDate);
     const monthDisplay = (0, _utils.getMonthDisplayRange)(this.props.month, this.props.dateOptions, this.props.fixedHeight);
     let ranges = this.props.ranges;
     if (displayMode === 'dateRange' && drag.status) {
@@ -60,31 +60,31 @@ class Month extends _react.PureComponent {
       style: this.props.style
     }, this.props.showMonthName ? /*#__PURE__*/_react.default.createElement("div", {
       className: styles.monthName
-    }, _dateFns.default.format(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)) : null, this.props.showWeekDays && renderWeekdays(styles, this.props.dateOptions, this.props.weekdayDisplayFormat), /*#__PURE__*/_react.default.createElement("div", {
+    }, dateFns.format(this.props.month, this.props.monthDisplayFormat, this.props.dateOptions)) : null, this.props.showWeekDays && renderWeekdays(styles, this.props.dateOptions, this.props.weekdayDisplayFormat), /*#__PURE__*/_react.default.createElement("div", {
       className: styles.days,
       onMouseLeave: this.props.onMouseLeave
-    }, _dateFns.default.eachDayOfInterval({
+    }, dateFns.eachDayOfInterval({
       start: monthDisplay.start,
       end: monthDisplay.end
     }).map((day, index) => {
-      const isStartOfMonth = _dateFns.default.isSameDay(day, monthDisplay.startDateOfMonth);
-      const isEndOfMonth = _dateFns.default.isSameDay(day, monthDisplay.endDateOfMonth);
-      const isOutsideMinMax = minDate && _dateFns.default.isBefore(day, minDate) || maxDate && _dateFns.default.isAfter(day, maxDate);
-      const isDisabledSpecifically = disabledDates.some(disabledDate => _dateFns.default.isSameDay(disabledDate, day));
+      const isStartOfMonth = dateFns.isSameDay(day, monthDisplay.startDateOfMonth);
+      const isEndOfMonth = dateFns.isSameDay(day, monthDisplay.endDateOfMonth);
+      const isOutsideMinMax = minDate && dateFns.isBefore(day, minDate) || maxDate && dateFns.isAfter(day, maxDate);
+      const isDisabledSpecifically = disabledDates.some(disabledDate => dateFns.isSameDay(disabledDate, day));
       const isDisabledDay = disabledDay(day);
       return /*#__PURE__*/_react.default.createElement(_DayCell.default, _extends({}, this.props, {
         ranges: ranges,
         day: day,
         preview: showPreview ? this.props.preview : null,
-        isWeekend: _dateFns.default.isWeekend(day, this.props.dateOptions),
-        isToday: _dateFns.default.isSameDay(day, now),
-        isStartOfWeek: _dateFns.default.isSameDay(day, _dateFns.default.startOfWeek(day, this.props.dateOptions)),
-        isEndOfWeek: _dateFns.default.isSameDay(day, _dateFns.default.endOfWeek(day, this.props.dateOptions)),
+        isWeekend: dateFns.isWeekend(day, this.props.dateOptions),
+        isToday: dateFns.isSameDay(day, now),
+        isStartOfWeek: dateFns.isSameDay(day, dateFns.startOfWeek(day, this.props.dateOptions)),
+        isEndOfWeek: dateFns.isSameDay(day, dateFns.endOfWeek(day, this.props.dateOptions)),
         isStartOfMonth: isStartOfMonth,
         isEndOfMonth: isEndOfMonth,
         key: index,
         disabled: isOutsideMinMax || isDisabledSpecifically || isDisabledDay,
-        isPassive: !_dateFns.default.isWithinInterval(day, {
+        isPassive: !dateFns.isWithinInterval(day, {
           start: monthDisplay.startDateOfMonth,
           end: monthDisplay.endDateOfMonth
         }),
